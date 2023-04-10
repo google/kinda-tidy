@@ -1,6 +1,8 @@
-# Widget frobulator
+# Kinda-Tidy
 
-This project is all about frobulating cool new widgets.
+Extensions to allow tidy verse style data analysis using pandas dataframes.  Note that we do not seek to
+reimplement the tidyverse in python.  The goal is to remain within the python idiom and add a few methods
+to allow a wide range of tidy operations.
 
 ## Contributing
 
