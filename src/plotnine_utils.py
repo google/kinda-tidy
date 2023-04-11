@@ -34,8 +34,6 @@ import numpy as np
 import pandas as pd
 import plotnine
 
-from google3.research.colab.lib import drive
-
 
 Number = numbers.Number
 
@@ -99,30 +97,3 @@ def quarter_labels(date_list: Sequence[datetime.datetime]) -> Sequence[str]:
     return str(dt.year) + 'Q' + str(dt.quarter)
 
   return [strftimeq(pd.Timestamp(x)) for x in date_list]
-
-
-def save_ggplot_to_drive(plot_object: plotnine.ggplot,
-                         file_name: str,
-                         parent_dir: Optional[str] = None):
-  """Saves a ggplot object as png to drive.
-
-  Args:
-    plot_object: the ggplot object to be saved
-    file_name: the name of the file to save to in drive
-    parent_dir: Optional, the name of the parent directory
-  Notes: The plot_object is converted to png and saved in the given file name in
-    the user's drive.  If a parent directory name is specified that directory is
-    created (if needed) and the new file is created under that directory. If the
-    plot file name already exists it is overwritten by the new png file.
-  """
-  if parent_dir:
-    parent_id = drive.GetOrCreateFolder(parent_dir)
-  if not drive.FileExists(file_name):
-    drive.CreateFile(
-        mime_type='image/png',
-        filename=file_name,
-        parents=[parent_id] if parent_dir else None)
-  byte_stream = io.BytesIO()
-  plotnine.ggsave(filename=byte_stream, plot=plot_object)
-  drive.SaveFile(
-      filename=file_name, data=byte_stream.getbuffer(), mime_type='image/png')
