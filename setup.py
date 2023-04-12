@@ -12,7 +12,7 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'kinda-tidy'
+NAME = 'kinda_tidy'
 DESCRIPTION = 'Tidyverse style analysis for pandas dataframes.'
 URL = 'https://github.com/google/kinda-tidy'
 EMAIL = 'agkeck.iivi@gmail.com'
