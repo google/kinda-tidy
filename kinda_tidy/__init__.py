@@ -13,7 +13,7 @@
 # limitations under the License.
 
 """Tidyverse like operations for Python."""
-import kinda_tidy
-# import kinda_tidy_fortify
-# import altair_util
-# import plotnine_util
+import kinda_tidy.kinda_tidy
+import kinda_tidy.kinda_tidy_fortify
+import kinda_tidy.altair_util
+import kinda_tidy.plotnine_util
