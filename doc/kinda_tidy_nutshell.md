@@ -87,8 +87,7 @@ For the examples in this document we'll use data from the gapminder project, a
 collection of socio-economic indicators for 142 countries.
 
 ```python
-%%f1_query gapminder
-select * from agkeck.gapminder
+gapminder = pd.read_csv('https://github.com/google/kinda-tidy/blob/main/data/gapminder.csv?raw=true')
 ```
 
 giving the following dataframe:
