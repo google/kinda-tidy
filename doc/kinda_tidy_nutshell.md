@@ -220,7 +220,7 @@ Example:
 
 ```python
 (gapminder
-  .assign(pop=lambda df: df.population / 1e6)
+  .assign(population=lambda df: df.population / 1e6)
  # modeling and visualization here
 )
 ```
