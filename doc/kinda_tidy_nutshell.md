@@ -96,7 +96,7 @@ gapminder.sample(5)
 
 giving the following dataframe:
 
-country     | continent | year | lifeexp | pop      | gdppercap
+country     | continent | year | lifeexp | population | gdppercap
 ----------- | --------- | ---- | ------- | -------- | ---------
 Afghanistan | Asia      | 1952 | 28.801  | 8425333  | 779.445
 Afghanistan | Asia      | 1957 | 30.332  | 9240934  | 820.853
