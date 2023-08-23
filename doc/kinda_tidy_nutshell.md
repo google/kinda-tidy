@@ -357,22 +357,19 @@ While we are at it we can add a new column with the fraction of the continent's 
 
 ```python
 (gapminder
-  .groupby(['continent', 'year'])
+  .tidy_groupby(['continent', 'year'])
   .agg({'population':np.sum})
-  .reset_index()
   .rename(columns={'population':'continental_pop'})
   .merge(gapminder, on=['continent', 'year'], how='right')
   .assign(pop_frac = lambda df: df.population/df.continental_pop)
-)
-```
+)```
 The above example uses a join to perform what is essentially an analytic function.  A more straightforward approach would be to apply a function that assigns group totals to a grouped object as follows.
 
 ```python
   (gapminder
-   .groupby(['continent', 'year'])
+   .tidy_groupby(['continent', 'year'])
    .apply(lambda grp: grp.assign(continental_pop = np.sum(grp.population)))
    .assign(pop_frac = lambda df: df.population/df.continental_pop)
-   .reset_index(drop=True)
   )
 ```
 
