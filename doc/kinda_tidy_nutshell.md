@@ -74,6 +74,9 @@ methods are added by the `kinda-tidy` package which can be loaded as below.
 ```
 
 ```python
+import pandas as pd
+import numpy as np
+
 # for ggplot
 from plotnine import *
 from mizani.breaks import date_breaks
