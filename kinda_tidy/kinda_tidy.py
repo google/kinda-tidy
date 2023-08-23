@@ -238,10 +238,14 @@ def _reverse_categories(
   if not target_columns:
     target_columns = res.columns
   target_columns = _adapt_scalar_to_vector(target_columns)
-  for c in target_columns:
-    if pd.api.types.is_categorical_dtype(res[c]):
-      res.loc[:, c] = pd.Categorical(
-          res[c], categories=res[c].values.categories[::-1])
+  for idx, col_name in enumerate(res.columns):
+    if col_name in target_columns and pd.api.types.is_categorical_dtype(
+        res.iloc[:, idx]
+    ):
+      reversed_categories = res.iloc[:, idx].cat.categories[::-1]
+      res.isetitem(
+          idx, res.iloc[:, idx].cat.reorder_categories(reversed_categories)
+      )
   return res
 
 
