@@ -207,18 +207,17 @@ can apply arbitrary functions of groups to produce new values. Some examples:
 Example:
 
 ```python
-(gapminder.assign(gdp=lambda df: df.gdppercap * df['pop']))
+(gapminder.assign(gdp=lambda df: df.gdppercap * df.population))
 ```
 
-creates a `gdp` column from the `gdppercap` and `pop` columns. Note that `pop`
-is a function name so we can't access the column with the dot notation.
+creates a `gdp` column from the `gdppercap` and `population` columns.
 
 --------------------------------------------------------------------------------
 
 Example:
 
 ```python
-(gapminder.assign(pop=lambda df: df['pop'] / 1e6)
+(gapminder.assign(pop=lambda df: df.population / 1e6)
  # modeling and visualization here
 )
 ```
@@ -239,7 +238,7 @@ Example:
 ```python {.ignore-codeblockanalysis}
 (gapminder
   .tidy_groupby(['continent','year'])
-  .assign(continent_pop = lambda df: sum(df['pop']))
+  .assign(continent_pop = lambda df: sum(df.population))
   .sort_values('year') # ensure order for pulling first and last values
   .tidy_groupby(['continent'])
   .assign(growth_factor = lambda df:df.continent_pop.iloc[-1]/df.continent_pop.iloc[0],
@@ -280,7 +279,7 @@ Kinda-tidy adds two more operations
 Example:
 
 ```python
-(gapminder.tidy_groupby('country').agg({'pop': np.mean}))
+(gapminder.tidy_groupby('country').agg({'population': np.mean}))
 ```
 aggregates the population column to a country level mean. We reset the index
 because groupby creates an index and it is rarely if ever useful afterward.
@@ -292,7 +291,7 @@ Example:
 ```python
 (gapminder
   .tidy_groupby('country')
-  .agg(mean_pop=('pop', np.mean), row_count=('pop', 'count'))
+  .agg(mean_pop=('population', np.mean), row_count=('population', 'count'))
  )
 ```
 
@@ -306,7 +305,7 @@ Example:
 ```python {.ignore-codeblockanalysis}
 (gapminder
   .tidy_groupby('country')
-  .agg({'pop':[np.mean, np.median]})
+  .agg({'population':[np.mean, np.median]})
   .flatten_columns()
  )
 ```
@@ -322,7 +321,7 @@ Example:
 (gapminder
   .sort_values('year')
   .tidy_groupby('country')
-  .assign(normalized_pop = lambda df: df['pop']/df['pop'].iloc[0])
+  .assign(normalized_pop = lambda df: df.population/df.population.iloc[0])
  )
 ```
 
