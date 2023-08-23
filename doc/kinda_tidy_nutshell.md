@@ -333,7 +333,43 @@ creates a population column normalized to the first available population (1952).
 
 ### Tall/Wide transformations
 
+
 ## Join/Merge
+
+The pandas `join()` method works nicely with indices.  As mentioned before, indices are powerful but non intuitive to those coming from the tidyverse.  The method `merge()` performs the same task but it is more like SQL and dplyr's `join()` method.
+
+---
+The basic syntax is
+
+```
+left_dataframe.merge(right_dataframe, on= , how=)
+```
+Where `on` specifies the key columns for the join and `how` specifies `inner`, `outer`, `left` or `right`.
+
+In this case we wish to augment the dataframe with yearly continent wide population.  We first create the yearly continent totals and then join with the original on continent and year.  We rename the column name to avoid name collison in the join although pandas will add suffixes to ensure unique names.
+
+While we are at it we can add a new column with the fraction of the continent's total population represented by each country each year.
+
+```python
+(gapminder
+  .groupby(['continent', 'year'])
+  .agg({'pop':np.sum})
+  .reset_index()
+  .rename(columns={'pop':'continental_pop'})
+  .merge(gapminder, on=['continent', 'year'], how='right')
+  .assign(pop_frac = lambda df: df['pop']/df.continental_pop)
+)
+```
+The above example uses a join to perform what is essentially an analytic function.  A more straightforward approach would be to apply a function that assigns group totals to a grouped object as follows.
+
+```python
+  (gapminder
+   .groupby(['continent', 'year'])
+   .apply(lambda grp: grp.assign(continental_pop = np.sum(grp['pop'])))
+   .assign(pop_frac = lambda df: df['pop']/df['continental_pop'])
+   .reset_index(drop=True)
+  )
+```
 
 ## Plot with ggplot
 
