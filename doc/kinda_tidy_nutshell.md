@@ -68,6 +68,9 @@ should not write in python.
 
 Most of the functionality we need is built into panda dataframes. The remaining
 methods are added by the `kinda-tidy` package which can be loaded as below.
+```python
+!pip install git+https://github.com/google/kinda-tidy
+```
 
 ```python
 # for ggplot
@@ -76,11 +79,7 @@ from mizani.breaks import date_breaks
 from mizani.formatters import date_format, percent_format, currency_format
 
 # for kinda-tidy
-from colabtools import adhoc_import
-
-with adhoc_import.Google3SubmittedChangelist():
-  from google3.video.youtube.analytics.data_science.analyses.paid_subs.music.lib.python import kinda_tidy
-  from google3.video.youtube.analytics.data_science.analyses.paid_subs.music.lib.python import plotnine_utils
+import kinda_tidy
 ```
 
 For the examples in this document we'll use data from the gapminder project, a
