@@ -69,6 +69,7 @@ should not write in python.
 Most of the functionality we need is built into panda dataframes. The remaining
 methods are added by the `kinda-tidy` package which can be loaded as below.
 ```python
+# install the package from github
 !pip install git+https://github.com/google/kinda-tidy
 ```
 
