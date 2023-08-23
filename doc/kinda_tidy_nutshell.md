@@ -362,7 +362,8 @@ While we are at it we can add a new column with the fraction of the continent's 
   .rename(columns={'population':'continental_pop'})
   .merge(gapminder, on=['continent', 'year'], how='right')
   .assign(pop_frac = lambda df: df.population/df.continental_pop)
-)```
+)
+```
 The above example uses a join to perform what is essentially an analytic function.  A more straightforward approach would be to apply a function that assigns group totals to a grouped object as follows.
 
 ```python
