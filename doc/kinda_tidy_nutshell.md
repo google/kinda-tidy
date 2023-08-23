@@ -91,6 +91,7 @@ collection of socio-economic indicators for 142 countries.
 
 ```python
 gapminder = pd.read_csv('https://github.com/google/kinda-tidy/blob/main/data/gapminder.csv?raw=true')
+gapminder.sample(5)
 ```
 
 giving the following dataframe:
