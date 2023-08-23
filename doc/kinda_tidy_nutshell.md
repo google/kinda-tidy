@@ -312,7 +312,7 @@ Example:
   .tidy_groupby('country')
   .agg({'population':[np.mean, np.median]})
   .flatten_columns()
- )
+)
 ```
 
 uses a list of aggregations for the single column. This results in a two level
@@ -331,6 +331,36 @@ Example:
 ```
 
 creates a population column normalized to the first available population (1952).
+
+Example:
+
+```python {.ignore-codeblockanalysis}
+(gapminder
+  .sort_values('year')
+  .tidy_groupby('country')
+  .assign(population_difference = lambda df: np.diff(df.population, prepend = np.nan))
+  .sort_values(['country','year'])
+ )
+```
+
+creates a population difference column.  Since the difference of a vector is shorter than the original vector
+we prepend a NA to preserve the length.  Note that the `tidy_groupby()` causes the difference to act within
+groups so the various country's populations are not mixed.
+
+Example:
+
+```python {.ignore-codeblockanalysis}
+(gapminder
+  .sort_values('year')
+  .tidy_groupby('country')
+  .assign(population_difference = lambda df: np.diff(df.population, append = np.nan)/df.population)
+  .sort_values(['country','year'])
+)
+```
+
+creates a population relative difference column.  We move the NA to the end of each group so for a given year
+we are calculating the relative change in the period following.
+
 
 ## Restructure
 
