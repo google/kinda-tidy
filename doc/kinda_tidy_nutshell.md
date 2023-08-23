@@ -108,11 +108,12 @@ We'll also need a wide dataframe so we pivot the population column against year
 
 ```python {.ignore-codeblockanalysis}
 gapminder_pop = (gapminder
-  .pivot(index='country', columns='year', values='pop')
+  .pivot(index='country', columns='year', values='population')
   .reset_index()
   .rename(columns=lambda cname: 'year:' + str(cname))
   .rename(columns={'year:country': 'country'})  # fix first column name
 )
+gapminder_pop
 ```
 
 giving
