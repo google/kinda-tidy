@@ -207,7 +207,9 @@ can apply arbitrary functions of groups to produce new values. Some examples:
 Example:
 
 ```python
-(gapminder.assign(gdp=lambda df: df.gdppercap * df.population))
+(gapminder
+  .assign(gdp=lambda df: df.gdppercap * df.population)
+)
 ```
 
 creates a `gdp` column from the `gdppercap` and `population` columns.
@@ -217,7 +219,8 @@ creates a `gdp` column from the `gdppercap` and `population` columns.
 Example:
 
 ```python
-(gapminder.assign(pop=lambda df: df.population / 1e6)
+(gapminder
+  .assign(pop=lambda df: df.population / 1e6)
  # modeling and visualization here
 )
 ```
@@ -279,7 +282,9 @@ Kinda-tidy adds two more operations
 Example:
 
 ```python
-(gapminder.tidy_groupby('country').agg({'population': np.mean}))
+(gapminder
+  .tidy_groupby('country').agg({'population': np.mean})
+)
 ```
 aggregates the population column to a country level mean. We reset the index
 because groupby creates an index and it is rarely if ever useful afterward.
