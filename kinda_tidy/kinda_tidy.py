@@ -216,7 +216,7 @@ def _drop_unused_levels(
   target_columns = _adapt_scalar_to_vector(target_columns)
   for c in target_columns:
     if pd.api.types.is_categorical_dtype(res[c]):
-      res[c].cat.remove_unused_categories(inplace=True)
+      res[c].cat.remove_unused_categories()
   return res
 
 
