@@ -58,10 +58,17 @@ class PlotnineUtilsTest(googletest.TestCase):
 
   def test_quarter_labels(self):
     result_labels = plotnine_utils.quarter_labels(
-        pd.to_datetime([
-            '20211231', '20220101', '2022-04-01 12:00:00', '20220704',
-            '20221010'
-        ]))
+        pd.to_datetime(
+            [
+                '20211231',
+                '20220101',
+                '2022-04-01 12:00:00',
+                '20220704',
+                '20221010',
+            ],
+            format='mixed',
+        )
+    )
     expected_labels = ['2021Q4', '2022Q1', '2022Q2', '2022Q3', '2022Q4']
     self.assertEqual(result_labels, expected_labels)
 
