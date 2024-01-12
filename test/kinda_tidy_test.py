@@ -194,23 +194,31 @@ class KindaTidyTest(googletest.TestCase):
   def test_to_date_scalar(self):
     result_df = self.input_dates1.to_date('date1')
     expected_df = pd.DataFrame({
-        'date1': pd.to_datetime(['2022-08-08', '2022-08-09 04:04']),
-        'date2': ['2022-08-08', '2022-08-09 04:04']
+        'date1': pd.to_datetime(
+            ['2022-08-08', '2022-08-09 04:04'], format='mixed'
+        ),
+        'date2': ['2022-08-08', '2022-08-09 04:04'],
     })
     pd_testing.assert_frame_equal(result_df, expected_df)
 
   def test_to_date_vector(self):
     result_df = self.input_dates1.to_date(['date1', 'date2'])
     expected_df = pd.DataFrame({
-        'date1': pd.to_datetime(['2022-08-08', '2022-08-09 04:04']),
-        'date2': pd.to_datetime(['2022-08-08', '2022-08-09 04:04'])
+        'date1': pd.to_datetime(
+            ['2022-08-08', '2022-08-09 04:04'], format='mixed'
+        ),
+        'date2': pd.to_datetime(
+            ['2022-08-08', '2022-08-09 04:04'], format='mixed'
+        ),
     })
     pd_testing.assert_frame_equal(result_df, expected_df)
 
   def test_to_date_with_format(self):
     result_df = self.input_dates2.to_date('date_col', format='%d (%b) %Y')
     expected_df = pd.DataFrame({
-        'date_col': pd.to_datetime(['2022-09-18', '2022-09-19']),
+        'date_col': pd.to_datetime(
+            ['2022-09-18', '2022-09-19'], format='mixed'
+        ),
     })
     pd_testing.assert_frame_equal(result_df, expected_df)
 
