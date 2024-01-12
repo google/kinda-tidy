@@ -14,6 +14,11 @@
 
 """Tidyverse like operations for Python."""
 
+# Motivation: Add pandas methods to facilitate tidy analysis.
+
+# CodeHealthStats Testing: L2
+# (full test coverage except for ggplot/altair objects)
+# CodeHealthStats LongestFunction: 36 lines
 
 import numbers
 import re
@@ -96,7 +101,7 @@ def _set_categorical(self: pd.DataFrame,
     res[category_col] = res[category_col].astype(str)
 
   if not value_col:
-    res.loc[:, category_col] = pd.Categorical(res[category_col])
+    res[category_col] = pd.Categorical(res[category_col])
     return res
 
   sort_data = sort_for_categories(res)
@@ -114,8 +119,9 @@ def _set_categorical(self: pd.DataFrame,
   if reverse:
     final_categories = final_categories[::-1]
 
-  res.loc[:, category_col] = pd.Categorical(
-      res[category_col], categories=final_categories)
+  res[category_col] = pd.Categorical(
+      res[category_col], categories=final_categories
+  )
 
   return res
 
@@ -216,7 +222,7 @@ def _drop_unused_levels(
   target_columns = _adapt_scalar_to_vector(target_columns)
   for c in target_columns:
     if pd.api.types.is_categorical_dtype(res[c]):
-      res[c].cat.remove_unused_categories()
+      res[c] = res[c].cat.remove_unused_categories()
   return res
 
 
@@ -361,9 +367,12 @@ def _to_date(self: pd.DataFrame, target_columns: Union[str, Sequence[str]],
     A copy of the DataFrame with the specified columns converted to datetime
     type.
   """
+  if 'format' not in kwargs:
+    kwargs['format'] = 'mixed'
+
   res = self.copy()
   for col in _adapt_scalar_to_vector(target_columns):
-    res.loc[:, col] = pd.to_datetime(res[col], **kwargs)
+    res[col] = pd.to_datetime(res[col], **kwargs)
   return res
 
 
@@ -402,7 +411,7 @@ def _equisample(self: pd.DataFrame,
 
 
 def _tee(self: pd.DataFrame,
-         function: Callable[[pd.Series], Any],
+         function: Callable[[pd.DataFrame], Any],
          print_result: Optional[bool] = True):
   """Apply a function to a dataframe, printing the result, and return frame.
 
